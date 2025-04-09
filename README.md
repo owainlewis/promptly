@@ -31,7 +31,7 @@ The time is {{ time }}.
 Render it using Promptly
 
 ```python
-from promptly import render
+from promptly_ai import render
 from datetime import datetime
 
 system_prompt = render("examples/prompts/hello.j2", time=datetime.now().isoformat())

@@ -1,4 +1,4 @@
-from promptly import render
+from promptly_ai import render
 import pytest
 import os
 import tempfile

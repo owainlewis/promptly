@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "promptly"
+name = "promptly-ai"
 version = "0.1.0"
 description = "A Python package for managing prompts using Jinja2 templates"
 readme = "README.md"
@@ -35,9 +35,13 @@ dev = [
     "mypy>=1.0.0",
     "ipykernel>=6.0.0",
     "types-PyYAML>=6.0.0",
+    "flake8>=6.0.0",
 ]
 
 [project.urls]
 Homepage = "https://github.com/owainlewis/promptly"
 Documentation = "https://github.com/owainlewis/promptly#readme"
-Repository = "https://github.com/owainlewis/promptly.git" 
+Repository = "https://github.com/owainlewis/promptly.git"
+
+[tool.hatch.build.targets.wheel]
+packages = ["promptly_ai"] 

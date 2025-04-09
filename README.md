@@ -9,7 +9,7 @@ Promptly is a simple Python library for managing AI prompts.
 ## Installation (WIP)
 
 ```bash
-pip install promptly
+pip install promptly-ai
 ```
 
 ## Quick Start

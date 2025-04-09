@@ -2,6 +2,13 @@
 
 A simple Python library for managing prompts using Jinja2 templates with YAML frontmatter support.
 
+This library is based on these ideas:
+
+- For AI projects, prompts are as important as code
+- Projects should be managed as files
+- Prompts should support metadata such as version, author, description, and model instructions.
+- Managing prompts should be easy by default
+
 ## Build
 
 ![Test](https://github.com/owainlewis/promptly/actions/workflows/test.yml/badge.svg)

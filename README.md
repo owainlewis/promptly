@@ -1,8 +1,8 @@
 # Promptly
 
-Promptly is a simple Python package for rendering Jinja2 templates from files. It provides a clean and straightforward way to load and render template files.
+Promptly is a simple Python library for managing AI prompts.
 
-## Installation
+## Installation (WIP)
 
 ```bash
 pip install promptly
@@ -10,29 +10,30 @@ pip install promptly
 
 ## Quick Start
 
-```python
-from promptly import render
+Create a prompt 
 
-# Create a template file
-with open("template.txt", "w") as f:
-    f.write("Hello, {{ name }}! Welcome to {{ platform }}.")
+```
+---
+version: 1.0.0
+author: Owain Lewis
+description: Example prompt to demonstrate the use of the Promptly library
+model: gpt-4o
+---
+You are a helpful assistant.
 
-# Render the template
-result = render("template.txt", name="Alice", platform="Promptly")
-print(result)  # Output: Hello, Alice! Welcome to Promptly.
+The time is {{ time }}.
 ```
 
-## Features
+Render it using Promptly
 
-- Simple, single-function interface
-- Jinja2 template support
-- File-based template loading
-- Clean error handling
-- Type hints included
+```python
+from promptly import render
+from datetime import datetime
 
-## Documentation
+system_prompt = render("examples/prompts/hello.j2", time=datetime.now().isoformat())
 
-For detailed documentation, please visit [the documentation page](https://github.com/yourusername/promptly#readme).
+print(system_prompt)
+```
 
 ## License
 

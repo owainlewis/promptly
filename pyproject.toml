@@ -11,7 +11,7 @@ requires-python = ">=3.8"
 license = "MIT"
 keywords = ["prompts", "templates", "jinja2"]
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "Owain Lewis", email = "owain@owainlewis.com" }
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -37,6 +37,6 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/promptly"
-Documentation = "https://github.com/yourusername/promptly#readme"
-Repository = "https://github.com/yourusername/promptly.git" 
+Homepage = "https://github.com/owainlewis/promptly"
+Documentation = "https://github.com/owainlewis/promptly#readme"
+Repository = "https://github.com/owainlewis/promptly.git" 

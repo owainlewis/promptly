@@ -2,6 +2,10 @@
 
 Promptly is a simple Python library for managing AI prompts.
 
+## Build
+
+![Test](https://github.com/owainlewis/promptly/actions/workflows/test.yml/badge.svg)
+
 ## Installation (WIP)
 
 ```bash

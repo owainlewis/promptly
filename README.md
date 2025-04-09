@@ -27,86 +27,118 @@ Create a prompt file with YAML frontmatter:
 
 ```yaml
 ---
-title: Greeting Prompt
-description: A simple greeting prompt
-tags: [greeting, basic]
+version: 1.0.0
+author: Owain Lewis
+model: gpt-4
+description: A simple greeting prompt with personality
 ---
-Hello, {{ name }}! How are you today?
+You are a friendly and enthusiastic assistant. Your name is {{ name }} and you love helping people!
+
+The current time is {{ time }}. How can I help you today?
 ```
 
 Then use it in your Python code:
 
 ```python
 from promptly_ai import PromptManager
+from datetime import datetime
 
 # Simple rendering
-content = PromptManager.render("greeting.txt", name="World")
-print(content)  # "Hello, World! How are you today?"
+content = PromptManager.render("greeting.txt", name="Alex", time=datetime.now().isoformat())
+print(content)
 
 # Get metadata
-metadata = PromptManager.get_metadata("greeting.txt")
-print(metadata["title"])  # "Greeting Prompt"
-print(metadata["description"])  # "A simple greeting prompt"
-
-# Get both content and metadata
-content, metadata = PromptManager.render_with_metadata("greeting.txt", name="World")
+model = PromptManager.get_model("greeting.txt")
+print(f"Using model: {model}")  # "Using model: gpt-4"
 ```
 
 ### Prompt Formats
 
-#### XML Format
+#### XML Format - Code Review Assistant
 ```xml
 ---
-version: 1.0.0
-model: gpt-4
+version: 1.1.0
+author: Code Review Team
+model: claude-3-opus
+description: A structured prompt for code review assistance
 ---
 <system>
-    <role>You are a helpful assistant.</role>
-    <context>The current time is {{ time }}.</context>
+    <role>You are an expert code reviewer with 20 years of experience.</role>
+    <context>
+        <language>{{ language }}</language>
+        <framework>{{ framework }}</framework>
+        <style_guide>{{ style_guide }}</style_guide>
+    </context>
     <instructions>
-        <item>Be helpful</item>
-        <item>Be concise</item>
-        <item>Be accurate</item>
+        <item>Review the code for best practices</item>
+        <item>Check for security vulnerabilities</item>
+        <item>Suggest performance improvements</item>
+        <item>Ensure style guide compliance</item>
     </instructions>
 </system>
 ```
 
-#### Markdown Format
+#### Markdown Format - Creative Writing Assistant
 ```markdown
 ---
-version: 1.0.0
-model: gpt-4
+version: 2.0.0
+author: Creative Writing Team
+model: gpt-4-turbo
+description: A creative writing assistant with genre-specific guidance
 ---
-# System Prompt
+# Creative Writing Assistant
 
-You are a helpful assistant.
+## Role
+You are an award-winning author specializing in {{ genre }} fiction.
 
 ## Context
-The current time is {{ time }}.
+- Target audience: {{ audience }}
+- Word count: {{ word_count }} words
+- Tone: {{ tone }}
 
 ## Instructions
-1. Be helpful
-2. Be concise
-3. Be accurate
+1. Generate a compelling {{ genre }} story opening
+2. Include vivid sensory details
+3. Establish clear character motivations
+4. Set up an intriguing conflict
+
+## Style Guidelines
+- Use active voice
+- Show, don't tell
+- Vary sentence structure
+- Include dialogue where appropriate
 ```
 
-#### Mixed Format
+#### Mixed Format - Data Analysis Assistant
 ```xml
 ---
-version: 1.0.0
-model: gpt-4
+version: 1.2.0
+author: Data Science Team
+model: claude-3-sonnet
+description: A data analysis assistant with structured guidance
 ---
 <system>
     # Role
-    You are a helpful assistant.
+    You are a data analysis expert with expertise in {{ domain }}.
 
     ## Context
-    The current time is {{ time }}.
+    - Dataset: {{ dataset_name }}
+    - Size: {{ row_count }} rows × {{ column_count }} columns
+    - Analysis Type: {{ analysis_type }}
 
     ## Instructions
-    1. Be helpful
-    2. Be concise
-    3. Be accurate
+    1. Analyze the data for {{ analysis_goal }}
+    2. Identify key patterns and trends
+    3. Generate visualizations if appropriate
+    4. Provide actionable insights
+
+    ## Output Format
+    <output>
+        <summary>Brief overview of findings</summary>
+        <methodology>Analysis approach used</methodology>
+        <findings>Key insights discovered</findings>
+        <recommendations>Actionable next steps</recommendations>
+    </output>
 </system>
 ```
 
@@ -119,7 +151,15 @@ Prompts can include metadata in YAML frontmatter. Common metadata fields include
 version: 1.0.0
 author: Your Name
 description: A description of the prompt
-model: gpt-4
+model: gpt-4  # or claude-3-opus, gpt-4-turbo, etc.
+parameters:
+  temperature: 0.7
+  max_tokens: 2000
+  top_p: 0.9
+tags:
+  - category: writing
+  - difficulty: intermediate
+  - use_case: creative
 ---
 Your prompt content here
 ```
@@ -137,6 +177,7 @@ model = PromptManager.get_model("prompt.txt")
 
 # Or get all metadata
 metadata = PromptManager.get_metadata("prompt.txt")
+print(f"Using {model} with parameters: {metadata['parameters']}")
 ```
 
 ### Advanced Usage
@@ -145,20 +186,33 @@ You can use any Jinja2 template features in your prompts:
 
 ```yaml
 ---
-title: Story Generator
-description: Generate a story based on parameters
+version: 1.0.0
+author: Prompt Engineering Team
+model: gpt-4
+description: A dynamic prompt generator based on user preferences
 parameters:
   genre: [fantasy, sci-fi, mystery]
   length: [short, medium, long]
+  style: [formal, casual, poetic]
 ---
-Write a {{ parameters.genre }} story that is {{ parameters.length }} in length.
+# {{ parameters.genre|title }} Story Generator
 
 {% if parameters.genre == "fantasy" %}
-Include magical elements and mythical creatures.
+You are a master of fantasy world-building. Create a story set in a magical realm where {{ setting }}.
 {% elif parameters.genre == "sci-fi" %}
-Include futuristic technology and space exploration.
+You are a visionary science fiction writer. Craft a story set in {{ year }} where {{ setting }}.
 {% else %}
-Include suspense and plot twists.
+You are a mystery writer known for intricate plots. Develop a story where {{ setting }}.
+{% endif %}
+
+The story should be {{ parameters.length }} in length and written in a {{ parameters.style }} style.
+
+{% if parameters.length == "long" %}
+Include multiple plot twists and character arcs.
+{% elif parameters.length == "medium" %}
+Focus on a single main plot with one or two subplots.
+{% else %}
+Keep the story focused and concise.
 {% endif %}
 ```
 

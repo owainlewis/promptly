@@ -1,6 +1,8 @@
-from promptly_ai import render
+from promptly_ai import PromptManager
 from datetime import datetime
 
-system_prompt = render("examples/prompts/hello.j2", time=datetime.now().isoformat())
+content = PromptManager.render(
+    "examples/prompts/hello.j2", time=datetime.now().isoformat()
+)
 
-print(system_prompt)
+metadata = PromptManager.get_metadata("examples/prompts/hello.j2")
